@@ -1,75 +1,77 @@
-# grayscale (OSS Final Project)
+# realtime-grayscale
 
-Python 기반 이미지 및 영상 전처리(흑백 변환, 리사이즈, 흑백/컬러 판별, 배경제거)를 제공하는 간단한 유틸리티 모듈입니다.  
-OpenCV, NumPy, MediaPipe를 사용해 이미지나 폴더 단위로 손쉽게 처리할 수 있습니다.  
+`realtime-grayscale`는 이미지와 영상 데이터를 전처리하기 위한 Python 유틸리티입니다.
 
----
+이미지를 흑백으로 변환하거나, 크기를 맞추거나, 흑백/컬러 여부를 확인할 수 있습니다.
+또한 MediaPipe를 활용해 사람 영역을 기준으로 배경을 제거하는 기능도 제공합니다.
 
-## Features
+## 주요 기능
 
-이 프로젝트에서 제공하는 주요 기능은 다음과 같습니다.:contentReference[oaicite:4]{index=4}:contentReference[oaicite:5]{index=5}
+## 1. 이미지 흑백 변환
 
-### 1. 이미지 흑백 변환
+이미지 파일을 흑백으로 변환할 수 있습니다.
 
-- `grayscale_image(file_path, output_path=None)`
-- `grayscale_folder(folder_path, output_folder=None)`
+## 2. 영상 프레임 흑백 변환
 
-이미지 1장 혹은 폴더 전체를 **grayscale(흑백)** 으로 변환합니다.  
-입력 파일이 이미 흑백이면 그대로 저장하고, 컬러일 경우 자동으로 BGR → GRAY 변환을 수행합니다.
+웹캠이나 영상에서 가져온 프레임을 실시간으로 흑백 처리할 수 있습니다.
+OpenCV와 함께 사용하면 실시간 영상 전처리에 활용할 수 있습니다.
 
----
+## 3. 이미지 리사이즈
 
-### 2. 이미지 리사이즈
+이미지를 원하는 크기로 조정할 수 있습니다.
+원본 비율을 유지한 상태로 리사이즈하며, 남는 영역은 검은 배경으로 채워집니다.
 
-- `resize_image(file_path, target_width, target_height, output_path=None)`
-- `resize_folder(folder_path, target_width, target_height, output_folder=None)`
+## 4. 흑백 / 컬러 이미지 판별
 
-특징:
+이미지가 흑백인지 컬러인지 확인할 수 있습니다.
+폴더를 입력하면 폴더 안의 이미지들이 흑백인지 컬러인지 한 번에 확인할 수 있습니다.
 
-- 가로×세로 비율을 유지하면서 리사이즈
-- 검은색 캔버스(배경) 위에 가운데 정렬해서 붙이는 방식(`image_resize`, `folder_resize`)
-- 폴더 전체 일괄 처리 기능 제공
+## 5. 배경 제거
 
----
+MediaPipe Selfie Segmentation을 사용해 사람 영역을 분리하고 배경을 제거할 수 있습니다.
+배경은 초록색 크로마키 색상으로 대체됩니다.
 
-### 3. 흑백/컬러 이미지 판별 및 폴더 처리
 
-- `is_gray(path, output_folder=None)`
+## 설치 방법
 
-단일 파일 또는 폴더를 입력했을 때, **흑백인지 컬러인지 판별**합니다.:contentReference[oaicite:8]{index=8}  
-
-- 파일 1개: 콘솔에 “흑백 이미지입니다 / 컬러 이미지입니다” 출력  
-- 폴더:
-  - 전체 이미지 개수, 흑백/컬러 개수 출력
-  - 흑백과 컬러가 섞여 있으면 콘솔에서 선택:
-    1. 전체 흑백 변환
-    2. 컬러 이미지만 다른 폴더로 분리
-    3. 아무것도 하지 않음
-
----
-
-### 4. 배경제거 (Person Segmentation)
-
-- `remove_background(frame)`
-- `remove_background_img(image_path)`:contentReference[oaicite:9]{index=9}  
-
-MediaPipe Selfie Segmentation 모델을 활용해 사람을 분리하고,  
-배경을 초록색으로 대체한 이미지를 생성합니다.
-
----
-
-## Requirements
-
-- Python >= 3.12:contentReference[oaicite:10]{index=10}
-- NumPy
-- OpenCV (opencv-python-headless)
-- MediaPipe
-
-`pyproject.toml`에 모든 의존성이 정의되어 있습니다.
+저장소를 클론합니다.
 
 ```bash
-# uv 사용 시
-uv sync
+git clone https://github.com/A1-devLab/realtime-grayscale.git
+cd realtime-grayscale
+```
 
-# 또는 일반 가상환경 + pip
-pip install -e .
+## 요구사항
+
+* Python 3.12 이상
+* OpenCV
+* NumPy
+* MediaPipe
+
+## 활용 예시
+
+이 프로젝트는 다음과 같은 작업에 활용할 수 있습니다.
+
+* 이미지 데이터셋 전처리
+* 흑백 이미지 변환
+* 실시간 웹캠 프레임 처리
+* 이미지 크기 통일
+* 흑백/컬러 이미지 분류
+* 사람 영역 기반 배경 제거
+
+## 프로젝트 구조
+
+```text
+realtime-grayscale/
+├── src/
+│   └── grayscale/
+│       ├── init.py
+│       └── preprocessor.py
+├── pyproject.toml
+├── uv.lock
+└── README.md
+```
+
+## 종료 방법
+
+실시간 웹캠 예시 코드를 실행한 경우, OpenCV 창을 선택한 상태에서 `q` 키를 누르면 종료됩니다.
